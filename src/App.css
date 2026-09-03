@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+html { scroll-behavior: smooth; }
+body {
+  background-color: #0A0A0A;
+  color: #F5F3EE;
+  font-family: 'Zen Old Mincho', 'Noto Serif SC', serif;
+  overflow-x: hidden;
+}
+.font-en { font-family: 'Inter', system-ui, sans-serif; }
+::selection { background: rgba(143,168,255,0.25); color: #F5F3EE; }
+
+@media (pointer: fine) {
+  html, body, #root, main, section, article, canvas, a, button, div, span, p, h1, h2, h3, h4, h5, h6, img, svg, input, textarea, select, label { cursor: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
