@@ -77,7 +77,24 @@ export default function HeroCanvas() {
       })
     }
 
-    const draw = () => {
+    
+    // Name ring particles init (before draw loop)
+    const nameRingParticles = []
+    for (let i = 0; i < 6; i++) {
+      const angle = (i / 6) * Math.PI * 2 + Math.random() * 0.5
+      const radius = 25 + Math.random() * 10
+      nameRingParticles.push({
+        angle: angle,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.00005 + Math.random() * 0.00002,
+        radius: radius,
+        opacity: 0.25,
+        size: 0.4,
+      })
+    }
+    const nameRingDrift = { x: 0, y: 0 }
+
+const draw = () => {
       const h1 = document.querySelector('h1')
       const canvasRect = canvas.getBoundingClientRect()
       if (h1) {
@@ -90,7 +107,22 @@ export default function HeroCanvas() {
       }
 
       ctx.clearRect(0, 0, W, H)
-      const p = progressRef.current
+      
+      // Name ring around the h1 text
+      for (let i = 0; i < nameRingParticles.length; i++) {
+        const pt = nameRingParticles[i]
+        pt.phase += pt.speed
+        const x = cx + Math.cos(pt.phase) * pt.radius + nameRingDrift.x
+        const y = cy + Math.sin(pt.phase) * pt.radius + nameRingDrift.y
+        ctx.fillStyle = `rgba(245,243,238,${pt.opacity})`
+        ctx.beginPath()
+        ctx.arc(x, y, pt.size, 0, Math.PI * 2)
+        ctx.fill()
+      }
+      nameRingDrift.x += (Math.random() - 0.5) * 0.01
+      nameRingDrift.y += (Math.random() - 0.5) * 0.01
+
+const p = progressRef.current
       const speed = 0.09 * p
 
       const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, W * 0.45)
